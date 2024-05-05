@@ -21,5 +21,15 @@ namespace Menu.Controllers
             return View(dish);
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+            var dish = await foodFoolio.Dishes.Include(di => di.dishngredients).ThenInclude(i => i.Ingredients).FirstOrDefaultAsync(x=>x.Id==id);
+            if (dish == null)
+            {
+                return NotFound();
+            }
+            return View(dish);
+        }
+
           }
 }

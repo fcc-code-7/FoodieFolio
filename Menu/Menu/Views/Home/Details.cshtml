@@ -1,0 +1,47 @@
+﻿@model Menu.Models.Dishes
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Dishes</h4>
+        <hr />
+        <table class="table">
+            <tr>
+                <th class="text-muted">Title</th>
+                <td>@Html.DisplayFor(model => model.Title)</td>
+            </tr>
+            <tr>
+                <th class="text-muted">Description</th>
+                <td>@Html.DisplayFor(model => model.Description)</td>
+            </tr>
+            <tr>
+                <th class="text-muted w-50">Image</th>
+                <td><img class="card-img-top w-25" src="@Model.IconUrl" alt="Card image cap"></td>
+            </tr>
+            <tr>
+                <th class="text-muted">Price</th>
+                <td>@Html.DisplayFor(model => model.price)</td>
+            </tr>
+            <tr>
+                <th class="text-muted">Ingredients</th>
+                <td>
+                 
+                        @foreach (var item in Model.dishngredients)
+                        {
+                            @item.Ingredients.Name
+                            <br />                        }
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
