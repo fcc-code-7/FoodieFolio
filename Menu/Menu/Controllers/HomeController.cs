@@ -1,32 +1,25 @@
+using Menu.DataContext;
 using Menu.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Menu.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly FoodFoolioContext foodFoolio;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(FoodFoolioContext foodFoolio)
         {
-            _logger = logger;
+            this.foodFoolio = foodFoolio;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var dish = await foodFoolio.Dishes.ToListAsync();
+            return View(dish);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+          }
 }
