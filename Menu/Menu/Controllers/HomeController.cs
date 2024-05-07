@@ -15,11 +15,21 @@ namespace Menu.Controllers
             this.foodFoolio = foodFoolio;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var dish = await foodFoolio.Dishes.ToListAsync();
-            return View(dish);
+            var dishes = from d in foodFoolio.Dishes
+                       select d;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                dishes=dishes.Where(d => d.Title.Contains(searchString));
+                return View(await dishes.ToListAsync());
+
+            }
+
+            return View(await dishes.ToListAsync());
         }
+
+     
 
         public async Task<IActionResult> Details(int? id)
         {
